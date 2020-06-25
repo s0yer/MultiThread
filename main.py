@@ -65,6 +65,21 @@ def mono_thread():
     print('Time of processament: ' + str(dif))
 
 def multi_thread():
-    print('MultiThread')
+    print('-----------------------------------------------------')
+    print('MultiThread: ')
+
+    # runtime = []
+    threads = []
+    pool = ThreadPool(processes=4)
+
+    start = time()
+    async_answer = pool.map_async(sum_lists(randon_list(),fibonacci(),geometric_progression()), (randon_list(),fibonacci(),geometric_progression()))
+    print(async_answer)
+    obj_answer = threads.append(async_answer)
+
+    end = time()
+    dif = end - start
+    print('Time of processament: ' + str(dif))
 
 mono_thread()
+multi_thread()
