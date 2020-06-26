@@ -3,6 +3,7 @@
 from random import randint
 from time import time
 from multiprocessing.pool import ThreadPool
+from threading import Thread
 
 global size_list
 size_list = 1000
@@ -43,7 +44,8 @@ def sum_lists(r_list, fibo, gp):
     sum_list = []
     i = 0
     while i < size_list:
-        sum_list.append(r_list[i] + fibo[i] + gp[i])
+        elem = r_list[i] + fibo[i] + gp[i]
+        sum_list.append(elem)
         i += 1
     return sum_list
 
@@ -76,6 +78,33 @@ def multi_thread():
     async_answer = pool.map_async(sum_lists(randon_list(),fibonacci(),geometric_progression()), (randon_list(),fibonacci(),geometric_progression()))
     print(async_answer)
     obj_answer = threads.append(async_answer)
+    print(obj_answer)
+
+    end = time()
+    dif = end - start
+    print('Time of processament: ' + str(dif))
+
+def multi_thread2():
+    print('-----------------------------------------------------')
+    print('MultiThread 2: ')
+    start = time()
+
+    a = Thread(target = randon_list)
+    a.start()
+    print(a)
+
+    b = Thread(target = fibonacci)
+    b.start()
+    print(b)
+
+    c = Thread(target = geometric_progression)
+    c.start()
+    print(c)
+
+
+    e = Thread(target= sum_lists, args=[randon_list(),fibonacci(), geometric_progression()])
+    e.start()
+    print(e)
 
     end = time()
     dif = end - start
@@ -83,3 +112,5 @@ def multi_thread():
 
 mono_thread()
 multi_thread()
+multi_thread2()
+
